@@ -1,0 +1,24 @@
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.results{
+    display: flex;
+    flex-direction: column;
+}
+
+.ligne{
+    display: flex;
+    flex-direction: row;
+}
+
+.intitule{
+    width: 80px;
+    flex-grow: 1;
+}
+
+.description{
+    width: 120px;
+    flex-grow: 3;
+}

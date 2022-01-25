@@ -79,15 +79,14 @@ class User
 
 	public function setNom($nom)
 	{
-		if (is_string($nom))
+		if(is_string($nom))
 		{
 			$this->_nom = $nom;
 		}	
 	}
 
-	public function setPrenom($prenom)
-	{
-		if (is_string($prenom))
+	public function setPrenom($prenom){
+		if(is_string($prenom))
 		{
 			$this->_prenom = $prenom;
 		}	
@@ -95,7 +94,7 @@ class User
 
 	public function setType($type)
 	{
-		if (is_string($type))
+		if(is_string($type))
 		{
 			$this->_type = $type;
 		}

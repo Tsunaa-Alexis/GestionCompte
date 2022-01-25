@@ -1,6 +1,6 @@
 <?php
-class UserManager
-{
+class UserManager{
+	
 	private $_db;
 
 	public function __construct($db)

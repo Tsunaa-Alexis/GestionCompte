@@ -1,0 +1,25 @@
+body{
+    max-height: 100vh;
+}
+
+.main{
+    display: flex;
+    flex-direction: row;
+}
+
+.main > div{
+    height: 100vh;
+    
+}
+
+.sidebar{
+    overflow: hidden;
+}
+
+.container{
+    max-width: initial;
+    width: 100% !important;
+    overflow-y: scroll;
+}
+
+
