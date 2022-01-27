@@ -86,6 +86,26 @@ class UserManager{
 
 	}
 
+	public function verifLoginInfos($mail, $password){
+
+		if(empty($mail)){ return false; }
+		if(empty($password)){ return false; }
+
+		$utilisateur = $this->getUser($mail);
+
+		if(!empty($utilisateur)){
+
+			if(password_verify($password, $utilisateur->getMdp())){
+				return true;
+			}
+
+		}
+
+		return false;
+
+
+	}
+
 	// initialisation de la db
 	public function setDb(PDO $db)
 	{

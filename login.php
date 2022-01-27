@@ -3,43 +3,10 @@
     <head>
         <title>Login</title>
         <?php include ("header.php"); ?>
+        <script language="javascript" type="text/javascript" src="js/login.min.js"></script>
+        <link rel="stylesheet" href="./css/login.min.css">
     </head>
     <body>
-    <?php
-
-        if (isset($_POST['identifier']))
-        {
-            if ($userManager->getUser($_POST['mail']))
-            {
-                $utilisateur = $userManager->getUser($_POST['mail']);
-                if (password_verify($_POST['motdepasse'], $utilisateur->getMdp()))
-                {
-                    session_start ();
-                    $_SESSION['login'] = true;
-                    $_SESSION['NomUtilisateur'] = $utilisateur->getNom();
-                    $_SESSION['PrenomUtilisateur'] = $utilisateur->getPrenom();
-                    $_SESSION['Type'] = $utilisateur->getType();
-                    $_SESSION['Mail'] = $utilisateur->getMail();
-                    $_SESSION['NumTel'] = $utilisateur->getNumTel();
-                    $_SESSION['idUser'] = $utilisateur->getId();
-
-                    header('Location: index.php');
-                }
-                else
-                {
-                    header('Location: index.php');
-                    echo "<p>Il existe pas</p>";
-                }
-            }
-            else
-            {
-            echo '<div class="jumbotron">
-                <p class="lead">Ce mail n\'est pas présent dans la base !</p>
-            </div>';
-            }  
-        }
-
-    ?>
         <div class="main">
             <?php include ("sideBar.php"); ?>
             <div class="container">
@@ -47,7 +14,10 @@
                     <h1 class="display-4">Connexion</h1>
                     <p class="lead">Merci de vous identifier</p>
                 </div>
-                <form method="post" id="formId"  novalidate>
+                <div class="popUp hide">
+                    <div class="messageAlerte">Identifiants incorrect</div>
+                </div>
+                <form method="post" id="formId"  onsubmit="return verifForm(this)" novalidate>
                     <div class="form-group row">
                         <div class="col-md-4 mb-3">
                             <label for="email">Adresse électronique : </label>
@@ -70,20 +40,5 @@
                 </form>
             </div>
         </div>
-        <script>
-        (function() {
-            "use strict"
-            window.addEventListener("load", function() {
-            var form = document.getElementById("formId")
-            form.addEventListener("submit", function(event) {
-                if (form.checkValidity() == false) {
-                event.preventDefault()
-                event.stopPropagation()
-                }
-                form.classList.add("was-validated")
-            }, false)
-            }, false)
-        }())
-        </script>
     </body>
 </html>

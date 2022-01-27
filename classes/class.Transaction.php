@@ -66,10 +66,10 @@ class Transaction {
 	}
 
     public function setPrix($prix){
-		$prix = (int) $prix;
+		$prix = (float) $prix;
 		if ($prix > 0)
 		{
-			$this->_prix = $prix;
+			$this->_prix = round($prix, 2);
 		}	
 	}
 

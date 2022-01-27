@@ -19,7 +19,16 @@ body{
 .container{
     max-width: initial;
     width: 100% !important;
+    min-width: 800px;
     overflow-y: scroll;
+    padding: 20px 20px;
+}
+
+.divider {
+    width: 100%;
+    border-top: 1px solid grey;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 

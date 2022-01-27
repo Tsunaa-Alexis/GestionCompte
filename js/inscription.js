@@ -32,7 +32,7 @@ function verifForm(form){
             return false;
         }
 
-        window.location.replace("login.php");
+        window.location.replace("./?action=login");
 
 	});
 

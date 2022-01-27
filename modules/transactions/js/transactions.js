@@ -8,6 +8,16 @@ function msgBoxAddDepense(idUser){
 	
 }
 
+function msgBoxAddRevenus(idUser){
+	
+	fancyboxParams = fancyboxDefaults;
+	fancyboxParams.type = 'ajax';
+	fancyboxParams.href = './modules/transactions/msgBox/addRevenus.php?idUser='+idUser;
+	
+	$.fancybox.open(fancyboxParams);
+	
+}
+
 function suppTransaction(idTransaction){
 
     if(!idTransaction){ return false; }

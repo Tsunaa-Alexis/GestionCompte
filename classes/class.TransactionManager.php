@@ -7,7 +7,13 @@ class TransactionManager{
 	{
 		$this->setDB($db);
 	}
-
+	
+	/**
+	 * getAllDepensesFromUser
+	 *
+	 * @param  mixed $idUser
+	 * @return void
+	 */
 	public function getAllDepensesFromUser($idUser){
 
         if(empty($idUser)){ return false; }
@@ -15,7 +21,7 @@ class TransactionManager{
 		$categorieManager = new CategorieManager($this->_db);
 		$userManager = new UserManager($this->_db);
 
-		$q = $this->_db->query("SELECT * FROM transactions WHERE idUser = '".$idUser."'");
+		$q = $this->_db->query("SELECT * FROM transactions WHERE idUser = '".$idUser."' AND type = 1");
 
 		$depenses = $q->fetchAll(PDO::FETCH_ASSOC);
 
@@ -26,6 +32,33 @@ class TransactionManager{
         }
 
 		return $allDepenses;
+
+	}
+	
+	/**
+	 * getAllRevenusFromUser
+	 *
+	 * @param  mixed $idUser
+	 * @return void
+	 */
+	public function getAllRevenusFromUser($idUser){
+
+        if(empty($idUser)){ return false; }
+        $allRevenus= array();
+		$categorieManager = new CategorieManager($this->_db);
+		$userManager = new UserManager($this->_db);
+
+		$q = $this->_db->query("SELECT * FROM transactions WHERE idUser = '".$idUser."' AND type = 2");
+
+		$arrayRevenus = $q->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($arrayRevenus as $revenus){
+			$revenus['categorie'] = $categorieManager->getCategorie($revenus['idCategorie']);
+			$revenus['user'] = $userManager->getUserbyid($revenus['idUser']);
+            $allRevenus[] = new Transaction($revenus);
+        }
+
+		return $allRevenus;
 
 	}
 	
@@ -69,6 +102,19 @@ class TransactionManager{
         return $retour;
 
     }
+
+	public function updateAllTransactionWithidCategorie($idCategorie){
+
+		if(empty($idCategorie)){ return false; }
+
+        $q = $this->_db->prepare('UPDATE transactions SET idCategorie = 1 WHERE idCategorie = :idCategorie');
+        $q->bindValue(':idCategorie', $idCategorie);
+
+        $retour = $q->execute();
+
+        return $retour;
+
+	}
 
 	// initialisation de la db
 	public function setDb(PDO $db)
