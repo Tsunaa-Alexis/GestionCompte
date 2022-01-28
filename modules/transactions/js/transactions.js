@@ -18,6 +18,16 @@ function msgBoxAddRevenus(idUser){
 	
 }
 
+function msgBoxEditTransaction(idTransaction, idUser){
+	
+	fancyboxParams = fancyboxDefaults;
+	fancyboxParams.type = 'ajax';
+	fancyboxParams.href = './modules/transactions/msgBox/editTransaction.php?idTransaction='+idTransaction+'&idUser='+idUser;
+	
+	$.fancybox.open(fancyboxParams);
+	
+}
+
 function suppTransaction(idTransaction){
 
     if(!idTransaction){ return false; }
@@ -35,9 +45,13 @@ function suppTransaction(idTransaction){
 	});
 	
 	requestAjaxCombo.done(function(data){
+		if(data === false){ return false; }
         window.location.reload();
 	});
 
     return false;
 
 }
+
+
+

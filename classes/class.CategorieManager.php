@@ -65,10 +65,8 @@ class CategorieManager{
 
 		$categorie = $q->fetch(PDO::FETCH_ASSOC);
 
-        $categorie['user'] = $userManager->getUserbyid($categorie['idUser']);
-
-
         if($categorie){
+            $categorie['user'] = $userManager->getUserbyid($categorie['idUser']);
 			return new Categorie($categorie);
 		}	
 
@@ -122,6 +120,19 @@ class CategorieManager{
         return $retour;
 
     }
+
+    public function editCategorie(Categorie $categorie){
+
+		$q = $this->_db->prepare("UPDATE categories SET intitule = :intitule, description = :description WHERE id = :id");
+
+
+		$q->bindValue(':intitule', $categorie->getIntitule());
+		$q->bindValue(':description', $categorie->getDescription());
+		$q->bindValue(':id', $categorie->getId());
+
+		$q->execute();
+
+	}
 
 }
 ?>

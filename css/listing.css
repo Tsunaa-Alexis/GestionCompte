@@ -42,7 +42,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     overflow: hidden;
     white-space: nowrap;
     padding: 0 4px;
-    line-height: 25px
+    line-height: 25px;
 }
 
 .results>div.entetes>div {
@@ -51,11 +51,12 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     line-height: 26px;
     font-weight: 700;
     height: 26px;
-    cursor: pointer;
-    position: relative
+    position: relative;
+    cursor: default;
 }
 
 .results>div.entetes>div.hoverAction:hover {
+    cursor: pointer;
     background-color: #d0d4dd
 }
 

@@ -93,6 +93,7 @@
                                 <div class="description"><?=$categorie->getDescription()?></div>
                                 <div class="action">
                                     <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-secondary" title="modifier" onclick="msgBoxEditCategorie(<?=$categorie->getId()?>, <?=$_SESSION['idUser']?>)"><i class="fas fa-edit"></i></button>
                                         <button type="button" class="btn btn-sm btn-danger" title="Supprimer" onclick="suppCategorie(<?=$categorie->getId()?>)"><i class="fas fa-times-circle"></i></button>
                                     </div>
                                 </div>

@@ -84,8 +84,8 @@ function genLienTri($tri){
 function genIconeTri($tri){
 	$class = "";
 	if($_GET['tri'] == $tri){
-		if($_GET['sensTri'] == "ASC"){ $class = "fas fa-chevron-down"; }
-		if($_GET['sensTri'] == "DESC"){ $class = "fas fa-chevron-up"; }
+		if($_GET['sensTri'] == "ASC"){ $class = "fas fa-chevron-up"; }
+		if($_GET['sensTri'] == "DESC"){ $class = "fas fa-chevron-down"; }
 	}else{
 		$class = "icon-tri-off";
 	}
@@ -98,4 +98,5 @@ if($_GET['action'] === 'login'){ include('login.php'); }
 if($_GET['action'] === 'categorie'){ include('./modules/categories/categories.php'); }
 if($_GET['action'] === 'depenses'){ include('./modules/transactions/depenses.php'); }
 if($_GET['action'] === 'revenus'){ include('./modules/transactions/revenus.php'); }
+if($_GET['action'] === 'statistiques'){ include('./modules/statistiques/statistiques.php'); }
 ?>

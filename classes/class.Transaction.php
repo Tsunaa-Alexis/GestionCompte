@@ -66,6 +66,7 @@ class Transaction {
 	}
 
     public function setPrix($prix){
+		$prix = str_replace(',', '.', $prix);
 		$prix = (float) $prix;
 		if ($prix > 0)
 		{

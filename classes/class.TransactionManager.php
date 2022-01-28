@@ -7,60 +7,93 @@ class TransactionManager{
 	{
 		$this->setDB($db);
 	}
-	
+		
 	/**
-	 * getAllDepensesFromUser
+	 * getAllTransactionsFromUser
 	 *
 	 * @param  mixed $idUser
+	 * @param  mixed $type
+	 * @param  mixed $debut
+	 * @param  mixed $limite
+	 * @param  mixed $order
 	 * @return void
 	 */
-	public function getAllDepensesFromUser($idUser){
+	public function getAllTransactionsFromUser($idUser, $type = "", $debut = '', $limite = '', $order = ''){
 
         if(empty($idUser)){ return false; }
-        $allDepenses = array();
+        $allTransactions= array();
+		$allTransactions['result'] = array();
+        $allTransactions['numRows'] = 0;
+
 		$categorieManager = new CategorieManager($this->_db);
 		$userManager = new UserManager($this->_db);
 
-		$q = $this->_db->query("SELECT * FROM transactions WHERE idUser = '".$idUser."' AND type = 1");
-
-		$depenses = $q->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach($depenses as $depense){
-			$depense['categorie'] = $categorieManager->getCategorie($depense['idCategorie']);
-			$depense['user'] = $userManager->getUserbyid($depense['idUser']);
-            $allDepenses[] = new Transaction($depense);
+		$limit = "";
+        if($debut !== '' && $limite !== ''){
+            $limit = " LIMIT ".$debut.",".$limite;
         }
 
-		return $allDepenses;
+		$where = "";
+		if($type !== ''){
+			$where = " AND type = '".$type."' ";
+		}
+
+		$q = $this->_db->query("SELECT 
+			t.* 
+		FROM transactions AS t
+		LEFT JOIN categories AS c ON c.id = t.idCategorie
+		WHERE t.idUser = '".$idUser."' 
+		".$where.$order.$limit);
+
+		$transactions = $q->fetchAll(PDO::FETCH_ASSOC);
+
+		$rows = "SELECT count(*) FROM transactions WHERE idUser = '".$idUser."' AND type = '".$type."'"; 
+        $q = $this->_db->prepare($rows); 
+        $q->execute(); 
+        $allTransactions['numRows'] = $q->fetchColumn();
+
+        foreach($transactions as $transaction){
+
+			$transaction['categorie'] = $categorieManager->getCategorie($transaction['idCategorie']);
+			$transaction['user'] = $userManager->getUserbyid($transaction['idUser']);
+
+            $allTransactions['result'][] = new Transaction($transaction);
+
+        }
+
+		return $allTransactions;
 
 	}
 	
 	/**
-	 * getAllRevenusFromUser
+	 * getTransaction
 	 *
-	 * @param  mixed $idUser
+	 * @param  mixed $idTransaction
 	 * @return void
 	 */
-	public function getAllRevenusFromUser($idUser){
+	public function getTransaction($idTransaction){
 
-        if(empty($idUser)){ return false; }
-        $allRevenus= array();
-		$categorieManager = new CategorieManager($this->_db);
+        if(empty($idTransaction)){ return false; }
+
+        $categorieManager = new CategorieManager($this->_db);
 		$userManager = new UserManager($this->_db);
 
-		$q = $this->_db->query("SELECT * FROM transactions WHERE idUser = '".$idUser."' AND type = 2");
+        $q = $this->_db->query("SELECT * FROM transactions WHERE id = '".$idTransaction."'");
 
-		$arrayRevenus = $q->fetchAll(PDO::FETCH_ASSOC);
+		$transaction = $q->fetch(PDO::FETCH_ASSOC);
 
-        foreach($arrayRevenus as $revenus){
-			$revenus['categorie'] = $categorieManager->getCategorie($revenus['idCategorie']);
-			$revenus['user'] = $userManager->getUserbyid($revenus['idUser']);
-            $allRevenus[] = new Transaction($revenus);
-        }
+        if($transaction){
 
-		return $allRevenus;
+			$transaction['categorie'] = $categorieManager->getCategorie($transaction['idCategorie']);
+			$transaction['user'] = $userManager->getUserbyid($transaction['idUser']);
 
-	}
+            return new Transaction($transaction);
+
+		}	
+
+		return $transaction;
+
+    }
 	
 	/**
 	 * addTransaction
@@ -113,6 +146,20 @@ class TransactionManager{
         $retour = $q->execute();
 
         return $retour;
+
+	}
+
+	public function editTransaction(Transaction $transaction){
+
+		$q = $this->_db->prepare("UPDATE transactions SET prix = :prix, idCategorie = :idCategorie, commentaire = :commentaire WHERE id = :id");
+
+
+		$q->bindValue(':prix', $transaction->getPrix());
+		$q->bindValue(':idCategorie', $transaction->getCategorie()->getId());
+		$q->bindValue(':commentaire', $transaction->getCommentaire());
+		$q->bindValue(':id', $transaction->getId());
+
+		$q->execute();
 
 	}
 

@@ -60,7 +60,7 @@ function verifFormAjoutRevenus(form){
                     <select name="idCategorie" style="width:456px; resize: none;">
                         <option value="">Choisir</option> 
                         <?php
-							foreach($arrayCategories as $categorie){
+							foreach($arrayCategories['result'] as $categorie){
 								echo '<option value="'.$categorie->getId().'">'.$categorie->getIntitule().'</option> ';	 
 							}
 						?>

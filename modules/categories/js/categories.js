@@ -8,6 +8,16 @@ function msgBoxAddCategorie(idUser){
 	
 }
 
+function msgBoxEditCategorie(idCategorie, idUser){
+	
+	fancyboxParams = fancyboxDefaults;
+	fancyboxParams.type = 'ajax';
+	fancyboxParams.href = './modules/categories/msgBox/editCategorie.php?idCategorie='+idCategorie+'&idUser='+idUser;
+	
+	$.fancybox.open(fancyboxParams);
+	
+}
+
 function suppCategorie(idCategorie){
 
     if(!idCategorie){ return false; }

@@ -51,6 +51,12 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="./?action=statistiques" class="nav-link text-white <?php if($_GET['action'] == 'statistiques'){ echo 'active'; } ?>">
+                    <i class="fas fa-chart-line"></i>
+                    Statistiques
+                    </a>
+                </li>
             <?php } ?>
         </ul>
     <hr>
