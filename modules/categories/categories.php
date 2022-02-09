@@ -55,7 +55,7 @@
                     <div class="sectionHeader" style="width:100%; height:40px;">
                         <div style="width:100%; height:40px;">
                             <div class="sectionTitle" style="float:left; padding-top:5px; font-size:25px;"><strong>Liste des Catégories</strong></div>
-                                <div class="sectionAddAction" style="float:left; padding-left:20px;"><button type="button" onclick="msgBoxAddCategorie(<?=$_SESSION['idUser']?>);" class="btn btn-info btn-sm" title="Ajouter une catégorie"><i class="fas fa-plus"></i> Catégorie</button></div>
+                                <div class="sectionAddAction" style="float:left; padding-left:20px;"><button type="button" onclick="msgBoxAddCategorie();" class="btn btn-info btn-sm" title="Ajouter une catégorie"><i class="fas fa-plus"></i> Catégorie</button></div>
                         </div>
                     </div>
                     <div class="divider"></div>
@@ -93,7 +93,7 @@
                                 <div class="description"><?=$categorie->getDescription()?></div>
                                 <div class="action">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-secondary" title="modifier" onclick="msgBoxEditCategorie(<?=$categorie->getId()?>, <?=$_SESSION['idUser']?>)"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-sm btn-secondary" title="modifier" onclick="msgBoxEditCategorie(<?=$categorie->getId()?>)"><i class="fas fa-edit"></i></button>
                                         <button type="button" class="btn btn-sm btn-danger" title="Supprimer" onclick="suppCategorie(<?=$categorie->getId()?>)"><i class="fas fa-times-circle"></i></button>
                                     </div>
                                 </div>

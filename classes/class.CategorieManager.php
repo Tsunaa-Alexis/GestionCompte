@@ -32,7 +32,8 @@ class CategorieManager{
             $limit = " LIMIT ".$debut.",".$limite;
         }
 
-		$q = $this->_db->query("SELECT * FROM categories WHERE idUser = '".$idUser."' ".$order.$limit);
+		$q = $this->_db->prepare("SELECT * FROM categories WHERE idUser = '".$idUser."' ".$order.$limit);
+        $q->execute();
 		$cat = $q->fetchAll(PDO::FETCH_ASSOC);
 
         $rows = "SELECT count(*) FROM categories WHERE idUser = '".$idUser."'"; 
@@ -61,7 +62,8 @@ class CategorieManager{
 
         $userManager = new UserManager($this->_db);
 
-        $q = $this->_db->query("SELECT * FROM categories WHERE id = '".$idCategorie."'");
+        $q = $this->_db->prepare("SELECT * FROM categories WHERE id = '".$idCategorie."'");
+        $q->execute();
 
 		$categorie = $q->fetch(PDO::FETCH_ASSOC);
 
@@ -103,13 +105,14 @@ class CategorieManager{
      * @param  mixed $idCategorie
      * @return void
      */
-    public function removeCategorie($idCategorie){
+    public function removeCategorie($idCategorie, $idUser){
         //réattribué à toutes les transactions une nouvelle catégorie
         if(empty($idCategorie)){ return false; }
         $transactionManager = new TransactionManager($this->_db);
 
-        $q = $this->_db->prepare('DELETE FROM categories WHERE id = :idCategorie');
+        $q = $this->_db->prepare('DELETE FROM categories WHERE id = :idCategorie AND idUser = :idUser');
         $q->bindValue(':idCategorie', $idCategorie);
+        $q->bindValue(':idUser', $idUser);
 
         $retour = $q->execute();
 

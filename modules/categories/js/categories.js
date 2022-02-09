@@ -1,18 +1,18 @@
-function msgBoxAddCategorie(idUser){
+function msgBoxAddCategorie(){
 	
 	fancyboxParams = fancyboxDefaults;
 	fancyboxParams.type = 'ajax';
-	fancyboxParams.href = './modules/categories/msgBox/addCategorie.php?idUser='+idUser;
+	fancyboxParams.href = './modules/categories/msgBox/addCategorie.php';
 	
 	$.fancybox.open(fancyboxParams);
 	
 }
 
-function msgBoxEditCategorie(idCategorie, idUser){
+function msgBoxEditCategorie(idCategorie){
 	
 	fancyboxParams = fancyboxDefaults;
 	fancyboxParams.type = 'ajax';
-	fancyboxParams.href = './modules/categories/msgBox/editCategorie.php?idCategorie='+idCategorie+'&idUser='+idUser;
+	fancyboxParams.href = './modules/categories/msgBox/editCategorie.php?idCategorie='+idCategorie;
 	
 	$.fancybox.open(fancyboxParams);
 	

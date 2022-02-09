@@ -6,7 +6,6 @@ function verifFormAjoutCategorie(form){
 	var dataToInsert = new Object();
 	dataToInsert.intitule = form.intitule.value;
     dataToInsert.description = form.description.value;
-    dataToInsert.idUser = <?=$_GET['idUser']?>;
 
 	var requestAjax = $.ajax({
 		url: "./modules/categories/msgBox/scripts/addCategorie.php",

@@ -8,9 +8,9 @@ include_once($_SERVER['DOCUMENT_ROOT']."/scripts/connectBDD.php");
 function chargerClasse($classname){ require $_SERVER['DOCUMENT_ROOT']."/classes/class.".$classname.".php"; }
 spl_autoload_register('chargerClasse');
 
-$categorieManager = new CategorieManager($db);
+$transactionManager = new TransactionManager($db);
 
-$retour = $categorieManager->removeCategorie($_POST['idCategorie'], $_SESSION['idUser']);
+$retour = $transactionManager->recupDatasJsonForChartsDepensesRevenus($_SESSION['idUser'] ,1642929562, 1643361562);
 
 header('Content-Type: application/json');
 echo json_encode($retour);

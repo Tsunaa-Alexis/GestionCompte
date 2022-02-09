@@ -38,12 +38,13 @@ class TransactionManager{
 			$where = " AND type = '".$type."' ";
 		}
 
-		$q = $this->_db->query("SELECT 
+		$q = $this->_db->prepare("SELECT 
 			t.* 
 		FROM transactions AS t
 		LEFT JOIN categories AS c ON c.id = t.idCategorie
 		WHERE t.idUser = '".$idUser."' 
 		".$where.$order.$limit);
+		$q->execute();
 
 		$transactions = $q->fetchAll(PDO::FETCH_ASSOC);
 
@@ -78,7 +79,8 @@ class TransactionManager{
         $categorieManager = new CategorieManager($this->_db);
 		$userManager = new UserManager($this->_db);
 
-        $q = $this->_db->query("SELECT * FROM transactions WHERE id = '".$idTransaction."'");
+        $q = $this->_db->prepare("SELECT * FROM transactions WHERE id = '".$idTransaction."'");
+		$q->execute();
 
 		$transaction = $q->fetch(PDO::FETCH_ASSOC);
 
@@ -151,16 +153,59 @@ class TransactionManager{
 
 	public function editTransaction(Transaction $transaction){
 
-		$q = $this->_db->prepare("UPDATE transactions SET prix = :prix, idCategorie = :idCategorie, commentaire = :commentaire WHERE id = :id");
+		$q = $this->_db->prepare("UPDATE transactions SET prix = :prix, idCategorie = :idCategorie, commentaire = :commentaire, dateAjout = :dateAjout WHERE id = :id");
 
 
 		$q->bindValue(':prix', $transaction->getPrix());
 		$q->bindValue(':idCategorie', $transaction->getCategorie()->getId());
 		$q->bindValue(':commentaire', $transaction->getCommentaire());
 		$q->bindValue(':id', $transaction->getId());
+		$q->bindValue(':dateAjout', $transaction->getDateAjout());
 
 		$q->execute();
 
+	}
+
+	public function recupDatasJsonForChartsDepensesRevenus($idUser, $dateDebut = "", $dateFin = ""){
+
+		if(empty($idUser)){ return false; }
+
+        $allTransactions= array();
+
+		$categorieManager = new CategorieManager($this->_db);
+		$userManager = new UserManager($this->_db);
+
+		$where = "";
+		if($dateDebut !== ''){ $where = " AND dateAjout >= '".$dateDebut."' "; }
+		if($dateFin !== ''){ $where = " AND dateAjout <= '".$dateFin."' "; }
+
+		$q = $this->_db->prepare("SELECT 
+			t.* 
+		FROM transactions AS t
+		LEFT JOIN categories AS c ON c.id = t.idCategorie
+		WHERE t.idUser = '".$idUser."' 
+		".$where);
+		$q->execute();
+
+		$transactions = $q->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($transactions as $transaction){
+
+			if(!isset($allTransactions[date('d/m/Y', $transaction['dateAjout'])])){ 
+				$allTransactions[date('d/m/Y', $transaction['dateAjout'])] = array();
+				$allTransactions[date('d/m/Y', $transaction['dateAjout'])]['revenus'] = array();
+				$allTransactions[date('d/m/Y', $transaction['dateAjout'])]['depenses'] = array();
+			}
+			if($transaction['type'] == 1){ 
+				$allTransactions[date('d/m/Y', $transaction['dateAjout'])]['depenses'][] = ['categorie' => $categorieManager->getCategorie($transaction['idCategorie'])->getIntitule(), 'prix' => $transaction['prix']]; 
+			}
+			if($transaction['type'] == 2){ 
+				$allTransactions[date('d/m/Y', $transaction['dateAjout'])]['revenus'][] = ['categorie' => $categorieManager->getCategorie($transaction['idCategorie'])->getIntitule(), 'prix' => $transaction['prix']]; 
+			}
+
+        }
+
+		return $allTransactions;
 	}
 
 	// initialisation de la db

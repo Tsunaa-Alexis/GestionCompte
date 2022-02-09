@@ -10,8 +10,12 @@ $categorieManager = new CategorieManager($db);
 
 $categorie = $categorieManager->getCategorie($_GET['idCategorie']);
 
+session_start();
+if($categorie->getUser()->getId() != $_SESSION['idUser']){ exit; }
+
 ?>
 <script type="text/javascript">
+
 function verifFormAjoutCategorie(form){
 
     if(!form.intitule.value){ return false;}

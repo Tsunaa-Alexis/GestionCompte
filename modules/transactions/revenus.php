@@ -57,7 +57,7 @@
                     <div class="sectionHeader" style="width:100%; height:40px;">
                         <div style="width:100%; height:40px;">
                             <div class="sectionTitle" style="float:left; padding-top:5px; font-size:25px;"><strong>Liste des Revenus</strong></div>
-                                <div class="sectionAddAction" style="float:left; padding-left:20px;"><button type="button" onclick="msgBoxAddRevenus(<?=$_SESSION['idUser']?>);" class="btn btn-info btn-sm" title="Ajouter une dépense"><i class="fas fa-plus"></i> Revenus</button></div>
+                                <div class="sectionAddAction" style="float:left; padding-left:20px;"><button type="button" onclick="msgBoxAddRevenus();" class="btn btn-info btn-sm" title="Ajouter une dépense"><i class="fas fa-plus"></i> Revenus</button></div>
                         </div>
                     </div>
                     <div class="divider"></div>
@@ -98,7 +98,7 @@
                                 <div class="dateAjout"><?=date('d/m/Y',$depense->getdateAjout())?></div>
                                 <div class="action">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-secondary" title="modifier" onclick="msgBoxEditTransaction(<?=$depense->getId()?>, <?=$_SESSION['idUser']?>)"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-sm btn-secondary" title="modifier" onclick="msgBoxEditTransaction(<?=$depense->getId()?>)"><i class="fas fa-edit"></i></button>
                                         <button type="button" class="btn btn-sm btn-danger" title="Supprimer" onclick="suppTransaction(<?=$depense->getId()?>)"><i class="fas fa-times-circle"></i></button>
                                     </div>
                                 </div>

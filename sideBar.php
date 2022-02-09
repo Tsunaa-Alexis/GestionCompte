@@ -19,7 +19,7 @@
             <li class="nav-item">
                 <a href="./" class="nav-link text-white <?php if(empty($_GET['action'])){ echo 'active'; } ?>">
                 <i class="fas fa-home"></i>
-                Acceuil
+                Accueil
                 </a>
             </li>
             <?php if(isset($_SESSION['login'])){ ?>

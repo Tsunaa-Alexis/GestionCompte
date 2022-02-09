@@ -8,21 +8,21 @@ function msgBoxAddDepense(idUser){
 	
 }
 
-function msgBoxAddRevenus(idUser){
+function msgBoxAddRevenus(){
 	
 	fancyboxParams = fancyboxDefaults;
 	fancyboxParams.type = 'ajax';
-	fancyboxParams.href = './modules/transactions/msgBox/addRevenus.php?idUser='+idUser;
+	fancyboxParams.href = './modules/transactions/msgBox/addRevenus.php';
 	
 	$.fancybox.open(fancyboxParams);
 	
 }
 
-function msgBoxEditTransaction(idTransaction, idUser){
+function msgBoxEditTransaction(idTransaction){
 	
 	fancyboxParams = fancyboxDefaults;
 	fancyboxParams.type = 'ajax';
-	fancyboxParams.href = './modules/transactions/msgBox/editTransaction.php?idTransaction='+idTransaction+'&idUser='+idUser;
+	fancyboxParams.href = './modules/transactions/msgBox/editTransaction.php?idTransaction='+idTransaction;
 	
 	$.fancybox.open(fancyboxParams);
 	
