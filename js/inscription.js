@@ -5,7 +5,7 @@ function verifForm(form){
 
     if(!form.nom.value){ return false; }
     if(!form.prenom.value){ return false; }
-    if(!form.mail.value){ return false; }
+    if($('.email').hasClass('invalid-feedback') && !form.mail.value){ return false; }
     if(!form.motdepasse1.value){ return false; }
 
 	var dataToInsert = new Object();

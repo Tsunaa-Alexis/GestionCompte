@@ -9,8 +9,6 @@ include_once($_SERVER['DOCUMENT_ROOT']."/scripts/connectBDD.php");
 function chargerClasse($classname){ require $_SERVER['DOCUMENT_ROOT']."/classes/class.".$classname.".php"; }
 spl_autoload_register('chargerClasse');
 
-
-
 $categorieManager = new CategorieManager($db);
 $userManager = new UserManager($db);
 $user = $userManager->getUserbyid($_SESSION['idUser']);

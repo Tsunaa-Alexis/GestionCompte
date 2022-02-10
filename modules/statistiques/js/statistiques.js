@@ -12,9 +12,6 @@ function drawCharts() {
 	});
 	
 	requestAjaxCombo.done(function(data){
-        
-        // let dateDebut = 1642929562
-        // let dateFin = 1643361562
 
         var dateDebut = new Date(1642929562000);
 		var dateFin = new Date(1643361562000);

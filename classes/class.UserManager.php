@@ -45,7 +45,9 @@ class UserManager{
 	// récupérer les informations d'un utilisateurs à partir de sont id
 	public function getUserbyid($id)
 	{
-		$q= $this->_db->query('SELECT  nom, prenom, mail, mdp, type, numTel, id FROM users WHERE id = "'. $id .'"');
+		$q= $this->_db->prepare('SELECT  nom, prenom, mail, mdp, type, numTel, id FROM users WHERE id = :id');
+		$q->bindValue(':id', $id);
+		$q->execute();
 		$userInfo = $q->fetch(PDO::FETCH_ASSOC);
 
 		if ($userInfo){

@@ -1,9 +1,9 @@
 <script type="text/javascript">
 function verifFormAjoutCategorie(form){
 
-    if(!form.intitule.value){ return false;}
+    if(!form.intitule.value){ return false; }
 
-	var dataToInsert = new Object();
+	let dataToInsert = new Object();
 	dataToInsert.intitule = form.intitule.value;
     dataToInsert.description = form.description.value;
 
@@ -17,6 +17,11 @@ function verifFormAjoutCategorie(form){
 	});
 	
 	requestAjax.done(function(data){
+
+        if(data === false){
+            return false;
+        }
+
 		window.location.reload();
 	})	
 	
